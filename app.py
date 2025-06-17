@@ -49,7 +49,7 @@ def index():
         else:
             school_code = sbd[:2]
             if school_code not in SUPPORTED_SCHOOLS.keys():
-                error = "Chỉ hỗ trợ 4 trường Đại An, Phạm Văn Nghị, Lương Thế Vinh, Nguyễn Đức Thuận, Hoàng Văn Thụ."
+                error = "Chỉ hỗ trợ các trường Đại An, Phạm Văn Nghị, Lương Thế Vinh, Nguyễn Đức Thuận, Hoàng Văn Thụ."
             else:
                 school_name = SUPPORTED_SCHOOLS[school_code]
                 excel_file = f"{school_code}.xlsx"
