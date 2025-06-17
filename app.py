@@ -15,6 +15,7 @@ SBD_COL = 1    # Cột A
 # Chỉ hỗ trợ các trường có mã 2 số đầu như sau:
 SUPPORTED_SCHOOLS = {
     "20": "Nguyễn Đức Thuận",
+    "21": "Hoàng Văn Thụ",  
     "22": "Lương Thế Vinh",
     "26": "Phạm Văn Nghị",
     "27": "Đại An"
@@ -24,6 +25,7 @@ SUPPORTED_SCHOOLS = {
 SCHOOL_CANDIDATES = {
     "20": 442,  # Đại An
     "22": 425,  # Nguyễn Đức Thuận
+    "21": 425,  # Hoàng Văn Thụ
     "26": 494,  # Phạm Văn Nghị
     "27": 317,  # Lương Thế Vinh
 }
@@ -47,7 +49,7 @@ def index():
         else:
             school_code = sbd[:2]
             if school_code not in SUPPORTED_SCHOOLS.keys():
-                error = "Chỉ hỗ trợ 4 trường Đại An, Phạm Văn Nghị, Lương Thế Vinh, Nguyễn Đức Thuận"
+                error = "Chỉ hỗ trợ 4 trường Đại An, Phạm Văn Nghị, Lương Thế Vinh, Nguyễn Đức Thuận, Hoàng Văn Thụ."
             else:
                 school_name = SUPPORTED_SCHOOLS[school_code]
                 excel_file = f"{school_code}.xlsx"
@@ -88,7 +90,7 @@ def index():
                             ranks[key] = rank_map[sbd]
                             scores[key] = dict(all_scores)[sbd]
                 except FileNotFoundError:
-                    error = f"Chỉ hỗ trợ các trường Phạm Văn Nghị, Đại An, Lương Thế Vinh, Nguyễn Đức Thuận."
+                    error = f"Chỉ hỗ trợ các trường Phạm Văn Nghị, Đại An, Lương Thế Vinh, Nguyễn Đức Thuận, Hoàng Văn Thụ."
 
     return render_template(
         "index.html",
