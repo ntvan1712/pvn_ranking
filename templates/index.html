@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
     <title>Tra cứu điểm và xếp hạng</title>
 </head>
 <body>
@@ -9,25 +8,20 @@
         Tra cứu điểm tổng và xếp hạng thi vào 10 Phạm Văn Nghị<br>
         được làm bởi Nguyễn Thế Văn khóa nào đấy
     </h2>
-
     <form method="POST">
         <label for="sbd">Nhập mã số báo danh:</label>
-        <input type="text" id="sbd" name="sbd" required>
-
-        <label for="subject">Xếp hạng theo:</label>
-        <select name="subject" id="subject">
-            <option value="total" {% if subject == 'total' %}selected{% endif %}>Tổng điểm</option>
-            <option value="van" {% if subject == 'van' %}selected{% endif %}>Văn</option>
-            <option value="toan" {% if subject == 'toan' %}selected{% endif %}>Toán</option>
-            <option value="anh" {% if subject == 'anh' %}selected{% endif %}>Anh</option>
-        </select>
-
+        <input type="text" id="sbd" name="sbd" required value="{{ sbd }}">
         <button type="submit">Tra cứu</button>
     </form>
 
-    {% if score is not none %}
-        <h3>Điểm của bạn ({{ subject|capitalize }}): {{ score }}</h3>
-        <h3>Xếp hạng: {{ rank }}/495</h3>
+    {% if scores %}
+        <h3>Điểm & xếp hạng:</h3>
+        <ul>
+            <li><b>Văn:</b> {{ scores.van }} – Xếp hạng: {{ ranks.van }}/494</li>
+            <li><b>Toán:</b> {{ scores.toan }} – Xếp hạng: {{ ranks.toan }}/494</li>
+            <li><b>Anh:</b> {{ scores.anh }} – Xếp hạng: {{ ranks.anh }}/494</li>
+            <li><b>Tổng điểm:</b> {{ scores.tong }} – Xếp hạng: {{ ranks.tong }}/494</li>
+        </ul>
     {% elif request.method == "POST" %}
         <p style="color:red">Không tìm thấy mã số báo danh này.</p>
     {% endif %}
