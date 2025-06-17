@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from openpyxl import load_workbook
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -15,6 +16,7 @@ def index():
 
     if request.method == "POST":
         sbd = request.form["sbd"].strip()
+        print(f"[{datetime.now()}] Tra cứu SBD: {sbd}")
         wb = load_workbook(EXCEL_FILE)
         ws = wb.active
 
