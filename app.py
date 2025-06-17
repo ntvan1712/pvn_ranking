@@ -13,19 +13,32 @@ def index():
     rank = None
     your_score = None
     total_scores = []
+    selected_subject = "total"
 
     if request.method == "POST":
         sbd = request.form["sbd"].strip()
-        print(f"[{datetime.now()}] Tra cứu SBD: {sbd}")
+        selected_subject = request.form.get("subject", "total")
+
+        print(f"[{datetime.now()}] Tra cứu SBD: {sbd} - Môn: {selected_subject}")
+
+        # Xác định cột tương ứng
+        col_map = {
+            "van": 2,     # cột B
+            "toan": 3,    # cột C
+            "anh": 4,     # cột D
+            "total": 5    # cột E
+        }
+        score_col = col_map.get(selected_subject, 5)
+
         wb = load_workbook(EXCEL_FILE)
         ws = wb.active
 
         for row in ws.iter_rows(min_row=2):
             sbd_cell = str(row[SBD_COL - 1].value).strip()
-            score_raw = row[TOTAL_SCORE_COL - 1].value
+            score_raw = row[score_col - 1].value
 
             try:
-                score = float(str(score_raw).replace(",", "."))
+                score = float(str(score_raw).replace(",", ".")) if score_raw else 0
                 total_scores.append((sbd_cell, score))
             except:
                 continue
@@ -40,7 +53,7 @@ def index():
                 rank = idx
                 break
 
-    return render_template("index.html", rank=rank, score=your_score)
+    return render_template("index.html", rank=rank, score=your_score, subject=selected_subject)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Tra cứu điểm và xếp hạng</title>
 </head>
 <body>
@@ -8,15 +9,25 @@
         Tra cứu điểm tổng và xếp hạng thi vào 10 Phạm Văn Nghị<br>
         được làm bởi Nguyễn Thế Văn khóa nào đấy
     </h2>
-        <form method="POST">
+
+    <form method="POST">
         <label for="sbd">Nhập mã số báo danh:</label>
         <input type="text" id="sbd" name="sbd" required>
+
+        <label for="subject">Xếp hạng theo:</label>
+        <select name="subject" id="subject">
+            <option value="total" {% if subject == 'total' %}selected{% endif %}>Tổng điểm</option>
+            <option value="van" {% if subject == 'van' %}selected{% endif %}>Văn</option>
+            <option value="toan" {% if subject == 'toan' %}selected{% endif %}>Toán</option>
+            <option value="anh" {% if subject == 'anh' %}selected{% endif %}>Anh</option>
+        </select>
+
         <button type="submit">Tra cứu</button>
     </form>
 
     {% if score is not none %}
-        <h3>Điểm của bạn: {{ score }}</h3>
-        <h3>Xếp hạng: {{ rank }}/494</h3>
+        <h3>Điểm của bạn ({{ subject|capitalize }}): {{ score }}</h3>
+        <h3>Xếp hạng: {{ rank }}/495</h3>
     {% elif request.method == "POST" %}
         <p style="color:red">Không tìm thấy mã số báo danh này.</p>
     {% endif %}
