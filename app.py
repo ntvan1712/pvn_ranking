@@ -5,6 +5,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 EXCEL_FILE = "diem_thi_namdinh.xlsx"
+
 COLS = {
     "van": 2,   # Cột B
     "toan": 3,  # Cột C
@@ -22,6 +23,7 @@ def index():
     if request.method == "POST":
         sbd = request.form["sbd"].strip()
         print(f"[{datetime.now()}] Tra cứu SBD: {sbd}")
+
         wb = load_workbook(EXCEL_FILE)
         ws = wb.active
 
@@ -35,12 +37,26 @@ def index():
                     all_scores.append((sbd_cell, score))
                 except:
                     continue
+
+            # Sắp xếp điểm giảm dần
             all_scores.sort(key=lambda x: x[1], reverse=True)
-            for idx, (curr_sbd, score) in enumerate(all_scores, start=1):
-                if curr_sbd == sbd:
-                    scores[key] = score
-                    ranks[key] = idx
-                    break
+
+            # Tính dense ranking
+            rank_map = {}
+            last_score = None
+            last_rank = 0
+            actual_rank = 0
+
+            for sbd_item, score in all_scores:
+                actual_rank += 1
+                if score != last_score:
+                    last_rank = actual_rank
+                    last_score = score
+                rank_map[sbd_item] = last_rank
+
+            if sbd in rank_map:
+                ranks[key] = rank_map[sbd]
+                scores[key] = dict(all_scores)[sbd]
 
     return render_template("index.html", ranks=ranks, scores=scores, sbd=sbd)
 

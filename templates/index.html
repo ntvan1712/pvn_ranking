@@ -8,6 +8,7 @@
         Tra cứu điểm tổng và xếp hạng thi vào 10 Phạm Văn Nghị<br>
         được làm bởi Nguyễn Thế Văn khóa nào đấy
     </h2>
+
     <form method="POST">
         <label for="sbd">Nhập mã số báo danh:</label>
         <input type="text" id="sbd" name="sbd" required value="{{ sbd }}">
@@ -15,12 +16,12 @@
     </form>
 
     {% if scores %}
-        <h3>Điểm & xếp hạng:</h3>
+        <h3>Kết quả cho mã số báo danh: <strong>{{ sbd }}</strong></h3>
         <ul>
-            <li><b>Văn:</b> {{ scores.van }} – Xếp hạng: {{ ranks.van }}/494</li>
-            <li><b>Toán:</b> {{ scores.toan }} – Xếp hạng: {{ ranks.toan }}/494</li>
-            <li><b>Anh:</b> {{ scores.anh }} – Xếp hạng: {{ ranks.anh }}/494</li>
-            <li><b>Tổng điểm:</b> {{ scores.tong }} – Xếp hạng: {{ ranks.tong }}/494</li>
+            <li><strong>Văn:</strong> {{ scores.van }} điểm — xếp hạng {{ ranks.van }}</li>
+            <li><strong>Toán:</strong> {{ scores.toan }} điểm — xếp hạng {{ ranks.toan }}</li>
+            <li><strong>Anh:</strong> {{ scores.anh }} điểm — xếp hạng {{ ranks.anh }}</li>
+            <li><strong>Tổng:</strong> {{ scores.tong }} điểm — xếp hạng {{ ranks.tong }}</li>
         </ul>
     {% elif request.method == "POST" %}
         <p style="color:red">Không tìm thấy mã số báo danh này.</p>
