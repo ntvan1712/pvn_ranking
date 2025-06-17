@@ -1,62 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Tra cứu điểm và xếp hạng</title>
+    <meta charset="UTF-8">
+    <title>Tra cứu điểm thi vào 10</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
         }
         .container {
             max-width: 600px;
-            margin: 40px auto;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             text-align: center;
         }
-        form {
-            margin-top: 20px;
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
         }
-        input, button {
-            padding: 8px;
-            margin: 5px;
+        form {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             font-size: 16px;
+        }
+        button {
+            padding: 10px 18px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
         }
         ul {
             list-style: none;
             padding: 0;
+            text-align: left;
         }
         li {
-            margin: 6px 0;
+            margin: 8px 0;
+            font-size: 17px;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result {
+    margin-top: 20px;
+    text-align: center;
+}
+.result ul {
+    display: inline-block;
+    text-align: left;
+}
+
+        .error {
+            color: red;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .congrats {
+            color: green;
+            font-size: 18px;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>
-            Tra cứu điểm và xếp hạng thi vào 10 Phạm Văn Nghị<br>
-            được làm bởi Nguyễn Thế Văn khóa nào đấy
-        </h2>
+        <h2>Tra cứu điểm và xếp hạng thi vào 10</h2>
+        <p><strong>Các trường hỗ trợ:</strong> Đại An, Phạm Văn Nghị, Lương Thế Vinh, Nguyễn Đức Thuận</p>
+        <p><em>Được làm bởi <strong>Nguyễn Thế Văn</strong> K4x Phạm Văn Nghị</em></p>
+        
 
         <form method="POST">
-            <label for="sbd">Nhập mã số báo danh:</label>
-            <input type="text" id="sbd" name="sbd" required value="{{ sbd }}">
+            <input type="text" name="sbd" placeholder="Nhập mã số báo danh" required value="{{ sbd }}">
             <button type="submit">Tra cứu</button>
         </form>
 
-        {% if scores %}
-            <h3>Kết quả cho mã số báo danh: <strong>{{ sbd }}</strong></h3>
-            <ul>
-                <li><strong>Văn:</strong> {{ scores.van }} điểm — xếp hạng {{ ranks.van }}</li>
-                <li><strong>Toán:</strong> {{ scores.toan }} điểm — xếp hạng {{ ranks.toan }}</li>
-                <li><strong>Anh:</strong> {{ scores.anh }} điểm — xếp hạng {{ ranks.anh }}</li>
-                <li><strong>Tổng:</strong> {{ scores.tong }} điểm — xếp hạng {{ ranks.tong }}</li>
-            </ul>
-           
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% elif scores %}
+            <div class="result">
+                <h3>Kết quả cho mã số báo danh: <strong>{{ sbd }}</strong></h3>
+                <ul>
+                    <li><strong>Văn:</strong> {{ scores.van }} điểm — xếp hạng {{ ranks.van }}</li>
+                    <li><strong>Toán:</strong> {{ scores.toan }} điểm — xếp hạng {{ ranks.toan }}</li>
+                    <li><strong>Anh:</strong> {{ scores.anh }} điểm — xếp hạng {{ ranks.anh }}</li>
+                    <li><strong>Tổng:</strong> {{ scores.tong }} điểm — xếp hạng {{ ranks.tong }}</li>
+                    {% if total_candidates %}
+                        <li><strong>Tổng số thí sinh:</strong> {{ total_candidates }}</li>
+                    {% endif %}
+                </ul>
+            </div>
         {% elif request.method == "POST" %}
-            <p style="color:red">Không tìm thấy mã số báo danh này.</p>
+            <div class="error">Không tìm thấy mã số báo danh này.</div>
         {% endif %}
 
-        <h3 style="color:green; margin-top: 20px;">
+        <div class="congrats">
             🎉 Chúc mừng em trai tôi đã đỗ cấp 3 ❤️
-        </h3>
+        </div>
     </div>
 </body>
 </html>
