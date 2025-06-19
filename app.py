@@ -26,7 +26,8 @@ SUPPORTED_SCHOOLS = {
     "22": "Lương Thế Vinh",
     "24": "Tống Văn Trân",  
     "26": "Phạm Văn Nghị",
-    "27": "Đại An"
+    "27": "Đại An",
+    "29": "Đỗ Huy Liêu"  
 }
 
 SCHOOL_CANDIDATES = {
@@ -36,6 +37,7 @@ SCHOOL_CANDIDATES = {
     "24": 604,
     "26": 494,
     "27": 317,
+    "29": 315,
 }
 
 
@@ -57,7 +59,7 @@ def index():
         else:
             school_code = sbd[:2]
             if school_code not in SUPPORTED_SCHOOLS:
-                error = "Chỉ hỗ trợ các trường Đại An, Phạm Văn Nghị, Lương Thế Vinh, Nguyễn Đức Thuận, Hoàng Văn Thụ, Tống Văn Trân."
+                error = "Chỉ hỗ trợ các trường Đại An, Phạm Văn Nghị, Lương Thế Vinh, Nguyễn Đức Thuận, Hoàng Văn Thụ, Tống Văn Trân, Đỗ Huy Liêu."
             else:
                 school_name = SUPPORTED_SCHOOLS[school_code]
                 excel_file = f"{school_code}.xlsx"
